@@ -63,4 +63,4 @@ def predict_iris():
 
 if __name__ == "__main__":
     app.run(port=8000)
-    #http: // 127.0.0.1: 8000 / ml / predict_iris?sepal_length = 10 & sepal_width = 1 & petal_length = 3 & petal_width = 2
+    #http://127.0.0.1:8000/ml/predict_iris?sepal_length=10&sepal_width=1&petal_length=3&petal_width=2
