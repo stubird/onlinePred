@@ -15,6 +15,8 @@ sqlc = SQLContext(sc)
 
 print(StructField , "go go go")
 
+df = sqlc.read.csv("hdfs://hadoop1:9000/home/hadoop/test.csv",header=True)
+
 pdline = pandas.read_csv("/Users/xiejinxin/datafloder/test/copy.csv")
 
 spkdf = sqlc.createDataFrame(pdline)

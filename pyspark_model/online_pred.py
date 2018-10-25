@@ -4,7 +4,7 @@ from sklearn.externals import joblib
 from pyspark.mllib.tree import GradientBoostedTreesModel
 from pyspark.mllib.linalg import SparseVector
 from pyspark import SparkContext,SparkConf
-
+import json
 app = Flask(__name__)
 
 # 加载模型
@@ -37,9 +37,11 @@ def gbdt():
         return Response(result_body, mimetype="application/json")
 
     # 获取请求参数
-    vector = request_args.get("vector", "(2,[0,0])")
+    vector = request_args.get("vector", "{\"lenght\":2,\"vector\":[0,0]}")
     print(vector)
-    ret = model.predict(SparseVector.parse(vector))
+    jsob = json.loads(vector)
+    vector = (int(jsob["lenght"]),[float(i) for i in jsob["vector"]])
+    ret = model.predict(jsob["vector"])
     print("predict result :" + str(ret))
 
     # 构造返回数据
@@ -56,4 +58,4 @@ def gbdt():
 
 if __name__ == "__main__":
     app.run(port=8000)
-    #http://127.0.0.1:8000/ml/predict_iris?sepal_length=10&sepal_width=1&petal_length=3&petal_width=2
+    #http://127.0.0.1:8000/ml/gbdt?sepal_length=10&sepal_width=1&petal_length=3&petal_width=2
