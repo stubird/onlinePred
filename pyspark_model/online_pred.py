@@ -37,11 +37,11 @@ def gbdt():
         return Response(result_body, mimetype="application/json")
 
     # 获取请求参数
-    vector = request_args.get("vector", "{vector=[0,0,0,0,0,0,0]}")
+    vector = request_args.get("vector", "{vector=[[0,0,0,0,0,0,0]]}")
     print(vector)
     jsob = json.loads(vector)
-    vector = [float(i) for i in jsob["vector"]]
-    ret = model.predict(jsob["vector"])
+    vector = [[float(j) for j in i] for i in jsob["vector"]]
+    ret = [model.predict(arr) for arr in vector]
     print("predict result :" + str(ret))
 
     # 构造返回数据
