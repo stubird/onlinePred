@@ -11,7 +11,7 @@ app = Flask(__name__)
 conf = SparkConf().setMaster("local").setAppName("My App")
 sc = SparkContext(conf = conf)
 
-model =GradientBoostedTreesModel.load(sc,'./model')
+model =GradientBoostedTreesModel.load(sc,'./sellModel')
 
 @app.route("/", methods=["GET"])
 def index():
@@ -37,10 +37,10 @@ def gbdt():
         return Response(result_body, mimetype="application/json")
 
     # 获取请求参数
-    vector = request_args.get("vector", "{\"lenght\":2,\"vector\":[0,0]}")
+    vector = request_args.get("vector", "{vector=[0,0,0,0,0,0,0]}")
     print(vector)
     jsob = json.loads(vector)
-    vector = (int(jsob["lenght"]),[float(i) for i in jsob["vector"]])
+    vector = [float(i) for i in jsob["vector"]]
     ret = model.predict(jsob["vector"])
     print("predict result :" + str(ret))
 
